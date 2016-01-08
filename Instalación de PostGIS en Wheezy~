@@ -1,0 +1,16 @@
+
+
+Instalación de Postgis (1.5) en Debian Wheezy, sobre PostgreSQL 9.1:
+
+Condiciones:
+  - ejecutando psql como usuario "postgres" desde la consola,
+  - previamente se ha creado la base de datos "geo"
+  - se crea preferiblemente un usuario al cual se le realizan los OWNER TO
+
+
+psql --username=postgres --dbname=geo --file=/usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+psql --username=postgres --dbname=geo --file=/usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+psql --username=postgres --dbname=geo --command="ALTER TABLE geometry_columns OWNER TO postgres"
+psql --username=postgres --dbname=geo --command="ALTER TABLE spatial_ref_sys OWNER TO postgres"
+
+

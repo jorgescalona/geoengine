@@ -1,0 +1,47 @@
+RECURSOS
+========================================================================================================================
+	PostGIS http://postgis.refractions.net/
+	Geos    http://trac.osgeo.org/geos/
+	Shapely http://pypi.python.org/pypi/Shapely
+	geojson http://pypi.python.org/pypi/geojson/1.0
+
+
+PARTE A - Instalación de POSTGIS 1.5 (Debian Wheezy : PostgreSQL 9.1):
+========================================================================================================================
+1) Como root desde la consola:
+	aptitude install postgresql-9.1-postgis
+
+2) Desde el Administrador de BD desde la interfaz gráfica de OpenERP:
+	Crear la base de datos "geo"
+
+3) Como usuario "postgres" desde la consola:
+	(se crea preferiblemente un usuario al cual se le realizan los OWNER TO).
+
+	psql --username=postgres --dbname=geo --file=/usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+	psql --username=postgres --dbname=geo --file=/usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+	psql --username=postgres --dbname=geo --command="ALTER TABLE geometry_columns OWNER TO postgres"
+	psql --username=postgres --dbname=geo --command="ALTER TABLE spatial_ref_sys OWNER TO postgres"
+
+
+PARTE B - Instalación de GEOS en Debian Wheezy:
+========================================================================================================================
+1) Como root desde la consola:
+	aptitude install libgeos-c1			(Geometry engine for Geographic Information Systems - C Library)
+	aptitude install libgeos-3.3.3		(Geometry engine for Geographic Information Systems - C++ Library)
+
+
+PARTE C - Instalación de GEOENGINE (Debian Wheezy Python 2.7 : OpenERP 6.1):
+========================================================================================================================
+1) Como root desde la consola:
+	pip install shapely
+	pip install geojson
+	
+2) Como usuario postgres, ejecutar desde la consola el Script "create_postgis_template.sh" (disponible,
+	en el modulo base_geoengine). Esto creará un template PostGIS.
+
+3) Si el template esta instalado, simplemente crear una base de datos, y entonces instalar el modulo.
+	(Depends on server branch of the project; merge pending)
+
+	De lo contrario, si el template PostGIS no está instalado, "PostGISificar" la base de datos manualmente,
+	(http://postgis.refractions.net/docs/ch02.html), y posteriormente instalar el modulo.
+
